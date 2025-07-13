@@ -68,14 +68,18 @@ jobs:
         chmod 600 tepis.pem
     - name: Deploy to EC2
       run: |
-        # Add your EC2 host to known_hosts
+        # Setup SSH
         mkdir -p ~/.ssh
-        ssh-keyscan -H ec2-3-111-186-130.ap-south-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+        echo "StrictHostKeyChecking no" >> ~/.ssh/config
         
-        # Deploy using SSH
-        ssh -i tepis.pem ubuntu@ec2-3-111-186-130.ap-south-1.compute.amazonaws.com '
-          cd /home/ubuntu/TEPIS_TEST &&
-          git pull origin main &&
-          docker-compose down &&
+        # Deploy using SSH with verbose output for debugging
+        ssh -v -o StrictHostKeyChecking=no -i tepis.pem ubuntu@ec2-3-111-186-130.ap-south-1.compute.amazonaws.com '
+          # Remove existing directory if it exists
+          rm -rf TEPIS_TEST || true
+          # Clone the repository
+          git clone https://github.com/krunalpatel355/TEPIS_TEST.git &&
+          cd TEPIS_TEST &&
+          # Build and run with docker-compose
+          docker-compose down || true &&
           docker-compose up -d
         '
