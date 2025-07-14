@@ -569,4 +569,4 @@ def event_detail(event_id):
     return render_template('event_detail.html', event=event, itinerary=itinerary)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
