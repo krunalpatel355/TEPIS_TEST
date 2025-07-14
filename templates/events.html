@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Events - TEPIS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="logo">
+                <div class="logo-icon">📅</div>
+                <span>TEPIS</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('events') }}" class="active">Events</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header -->
+        <section class="section" style="padding-top: 2rem;">
+            <h2>Discover Events</h2>
+            <p class="section-subtitle">Explore our curated collection of extraordinary events from around the world</p>
+        </section>
+
+        <!-- Filters Section -->
+        <section class="section" style="padding-top: 1rem;">
+            <div class="filters">
+                <form method="GET" action="{{ url_for('events') }}">
+                    <div class="filters-row">
+                        <div class="filter-group">
+                            <label for="search">Search Events</label>
+                            <input type="text" id="search" name="search" placeholder="Search events, locations, or keywords..." value="{{ current_search }}">
+                        </div>
+                        <div class="filter-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category">
+                                <option value="All Categories" {% if current_category == 'All Categories' %}selected{% endif %}>All Categories</option>
+                                <option value="music" {% if current_category == 'music' %}selected{% endif %}>Music ({{ filter_counts.categories.music }})</option>
+                                <option value="sports" {% if current_category == 'sports' %}selected{% endif %}>Sports ({{ filter_counts.categories.sports }})</option>
+                                <option value="culture" {% if current_category == 'culture' %}selected{% endif %}>Culture ({{ filter_counts.categories.culture }})</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="price_range">Price Range</label>
+                            <select id="price_range" name="price_range">
+                                <option value="All Prices" {% if current_price_range == 'All Prices' %}selected{% endif %}>All Prices</option>
+                                <option value="moderate" {% if current_price_range == 'moderate' %}selected{% endif %}>Moderate ({{ filter_counts.price_tiers.moderate }})</option>
+                                <option value="luxury" {% if current_price_range == 'luxury' %}selected{% endif %}>Luxury ({{ filter_counts.price_tiers.luxury }})</option>
+                                <option value="premium" {% if current_price_range == 'premium' %}selected{% endif %}>Premium ({{ filter_counts.price_tiers.premium }})</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="country">Country</label>
+                            <select id="country" name="country">
+                                <option value="All Countries" {% if current_country == 'All Countries' %}selected{% endif %}>All Countries</option>
+                                {% for country, count in filter_counts.countries.items() %}
+                                <option value="{{ country }}" {% if current_country == country %}selected{% endif %}>{{ country }} ({{ count }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="results-count">
+                    {{ total_events }} events found
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Grid -->
+        <section class="section" style="padding-top: 1rem;">
+            <div class="events-grid">
+                {% for event in events %}
+                <div class="event-card" onclick="window.location.href='{{ url_for('event_detail', event_id=event._id) }}'">
+                    <div class="event-image">
+                        <div class="event-badges">
+                            <span class="badge {{ event.category }}">{{ event.category }}</span>
+                            <span class="badge {{ event.price_tier }}">{{ event.price_tier }}</span>
+                        </div>
+                        {{ event.event_title[:20] }}...
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title">{{ event.event_title }}</h3>
+                        <div class="event-location">
+                            📍 {{ event.city_name }}, {{ event.country_name }}
+                        </div>
+                        <div class="event-details">
+                            <span>📅 {{ event.start_date }}</span>
+                            <span>⏰ {{ event.duration }}</span>
+                        </div>
+                        <div class="event-price">{{ event.ticket_price }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if events|length == 0 %}
+            <div style="text-align: center; padding: 3rem;">
+                <h3 style="color: #64748b;">No events found matching your criteria</h3>
+                <p style="color: #94a3b8;">Try adjusting your filters or search terms</p>
+                <a href="{{ url_for('events') }}" class="btn btn-primary" style="margin-top: 1rem;">Clear Filters</a>
+            </div>
+            {% endif %}
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TEPIS</h3>
+                <p>Discover extraordinary events around the world and let us craft the perfect trip around your passion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{{ url_for('home') }}">Home</a></li>
+                    <li><a href="{{ url_for('events') }}">All Events</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="#contact">📍 Global Adventures</a></li>
+                    <li><a href="mailto:hello@tepis.com">hello@tepis.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 TEPIS. Crafted with passion for extraordinary experiences.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
