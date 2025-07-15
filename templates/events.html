@@ -43,26 +43,29 @@
                             <label for="category">Category</label>
                             <select id="category" name="category">
                                 <option value="All Categories" {% if current_category == 'All Categories' %}selected{% endif %}>All Categories</option>
-                                <option value="music" {% if current_category == 'music' %}selected{% endif %}>Music ({{ filter_counts.categories.music }})</option>
-                                <option value="sports" {% if current_category == 'sports' %}selected{% endif %}>Sports ({{ filter_counts.categories.sports }})</option>
-                                <option value="culture" {% if current_category == 'culture' %}selected{% endif %}>Culture ({{ filter_counts.categories.culture }})</option>
+                                {% for category, count in filter_counts.categories.items() %}
+                                <option value="{{ category }}" {% if current_category == category %}selected{% endif %}>{{ category }} ({{ count }})</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="filter-group">
                             <label for="price_range">Price Range</label>
                             <select id="price_range" name="price_range">
                                 <option value="All Prices" {% if current_price_range == 'All Prices' %}selected{% endif %}>All Prices</option>
-                                <option value="moderate" {% if current_price_range == 'moderate' %}selected{% endif %}>Moderate ({{ filter_counts.price_tiers.moderate }})</option>
-                                <option value="luxury" {% if current_price_range == 'luxury' %}selected{% endif %}>Luxury ({{ filter_counts.price_tiers.luxury }})</option>
-                                <option value="premium" {% if current_price_range == 'premium' %}selected{% endif %}>Premium ({{ filter_counts.price_tiers.premium }})</option>
+                                {% for tier, count in filter_counts.price_tiers.items() %}
+                                <option value="{{ tier }}" {% if current_price_range == tier %}selected{% endif %}>{{ tier }} ({{ count }})</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label for="country">Country</label>
-                            <select id="country" name="country">
-                                <option value="All Countries" {% if current_country == 'All Countries' %}selected{% endif %}>All Countries</option>
-                                {% for country, count in filter_counts.countries.items() %}
-                                <option value="{{ country }}" {% if current_country == country %}selected{% endif %}>{{ country }} ({{ count }})</option>
+                            <label for="location">Location</label>
+                            <select id="location" name="location">
+                                <option value="All Locations" {% if current_location == 'All Locations' %}selected{% endif %}>All Locations</option>
+                                {% for state, count in filter_counts.states.items() %}
+                                <option value="{{ state }}" {% if current_location == state %}selected{% endif %}>{{ state }} ({{ count }})</option>
+                                {% endfor %}
+                                {% for city, count in filter_counts.cities.items() %}
+                                <option value="{{ city }}" {% if current_location == city %}selected{% endif %}>{{ city }} ({{ count }})</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -82,24 +85,29 @@
         <section class="section" style="padding-top: 1rem;">
             <div class="events-grid">
                 {% for event in events %}
-                <div class="event-card" onclick="window.location.href='{{ url_for('event_detail', event_id=event._id) }}'">
-                    <div class="event-image">
+                <div class="event-card">
+                    <div class="event-image" style="background-image: url('{{ event.image_url or '/static/images/default-event.jpg' }}'); background-size: cover; background-position: center; position: relative;">
                         <div class="event-badges">
-                            <span class="badge {{ event.category }}">{{ event.category }}</span>
-                            <span class="badge {{ event.price_tier }}">{{ event.price_tier }}</span>
+                            <span class="badge">{{ event.event_type or 'Others' }}</span>
                         </div>
-                        {{ event.event_title[:20] }}...
+                        <div class="event-title-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: white; padding: 0.5rem; font-size: 0.9rem;">
+                            {{ event.event_title[:40] }}{% if event.event_title|length > 40 %}...{% endif %}
+                        </div>
                     </div>
                     <div class="event-content">
                         <h3 class="event-title">{{ event.event_title }}</h3>
                         <div class="event-location">
-                            📍 {{ event.city_name }}, {{ event.country_name }}
+                            📍 {{ event.city_name or 'Unknown' }}, {{ event.country_name or 'Unknown' }}
                         </div>
                         <div class="event-details">
                             <span>📅 {{ event.start_date }}</span>
-                            <span>⏰ {{ event.duration }}</span>
+                            <span>⏰ {{ event.start_time or 'TBD' }}</span>
                         </div>
-                        <div class="event-price">{{ event.ticket_price }}</div>
+                        <div class="event-price">{{ event.ticket_price or 'TBD' }}</div>
+                        <div class="event-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                            <a href="{{ url_for('event_detail', event_id=event._id) }}" class="btn btn-secondary" style="flex: 1; text-align: center; padding: 0.5rem; text-decoration: none; border-radius: 4px;">View Details</a>
+                            <a href="{{ url_for('trip_planner', event_id=event._id) }}" class="btn btn-primary" style="flex: 1; text-align: center; padding: 0.5rem; text-decoration: none; border-radius: 4px;">Plan Trip</a>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
@@ -110,6 +118,23 @@
                 <h3 style="color: #64748b;">No events found matching your criteria</h3>
                 <p style="color: #94a3b8;">Try adjusting your filters or search terms</p>
                 <a href="{{ url_for('events') }}" class="btn btn-primary" style="margin-top: 1rem;">Clear Filters</a>
+            </div>
+            {% endif %}
+
+            <!-- Pagination -->
+            {% if total_pages > 1 %}
+            <div class="pagination-container" style="margin-top: 2rem; text-align: center;">
+                <div class="pagination">
+                    {% if has_prev %}
+                    <a href="{{ url_for('events', page=current_page-1, category=current_category, price_range=current_price_range, location=current_location, search=current_search) }}" class="btn btn-secondary">← Previous</a>
+                    {% endif %}
+                    
+                    <span class="page-info" style="margin: 0 1rem;">Page {{ current_page }} of {{ total_pages }}</span>
+                    
+                    {% if has_next %}
+                    <a href="{{ url_for('events', page=current_page+1, category=current_category, price_range=current_price_range, location=current_location, search=current_search) }}" class="btn btn-secondary">Next →</a>
+                    {% endif %}
+                </div>
             </div>
             {% endif %}
         </section>
