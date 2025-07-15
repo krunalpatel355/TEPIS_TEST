@@ -14,6 +14,7 @@ class RestaurantAgent:
         # Set API token from parameter or use fallback for testing
         if api_token:
             os.environ["HUGGINGFACEHUB_API_TOKEN"] = api_token
+
         
         # Initialize model
         self.endpoint = HuggingFaceEndpoint(

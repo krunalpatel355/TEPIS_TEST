@@ -214,6 +214,13 @@
                         </div>
                     </div>
                 {% endif %}
+                
+                {% if error %}
+                <div class="error-message" style="text-align: center; color: #d9534f; margin-top: 2rem; padding: 1rem; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px;">
+                    <p><strong>Error:</strong> {{ error }}</p>
+                    <p>Please try again or contact support if the issue persists.</p>
+                </div>
+                {% endif %}
             </div>
             {% endif %}
 

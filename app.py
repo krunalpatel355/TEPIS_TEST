@@ -353,10 +353,14 @@ def event_detail(event_id):
             
             return render_template('event_detail.html', event=event, trip_data=trip_data, show_trip_plan=True)
         except Exception as e:
-            print(f"Error generating trip data: {e}")
+            # Add detailed logging
+            print("Error generating trip data:")
+            import traceback
+            traceback.print_exc()
+            
             # Fall back to basic event display with error message
             itinerary = itinerary_data.get(event_id, {"itinerary": [], "highlights": [], "trip_info": {}})
-            return render_template('event_detail.html', event=event, itinerary=itinerary, error=f"Error generating trip plan: {str(e)}")
+            return render_template('event_detail.html', event=event, itinerary=itinerary, show_trip_plan=False, error=f"Error generating trip plan: {str(e)}")
     
     # Regular event detail view
     itinerary = itinerary_data.get(event_id, {"itinerary": [], "highlights": [], "trip_info": {}})
