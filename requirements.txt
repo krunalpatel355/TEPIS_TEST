@@ -8,6 +8,6 @@ blinker==1.6.3
 pymongo==4.6.0
 boto3==1.34.0
 botocore==1.34.0
-langchain-core==0.1.45
+langchain-core>=0.1.52
 langchain-huggingface==0.0.3
 requests==2.31.0
