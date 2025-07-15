@@ -73,11 +73,7 @@ jobs:
       run: |
         ssh -i ~/.ssh/deploy_key ubuntu@ec2-54-209-152-194.compute-1.amazonaws.com '
           cd TEPIS_TEST &&
-          if ! command -v docker-compose &> /dev/null; then
-            sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &&
-            sudo chmod +x /usr/local/bin/docker-compose
-          fi &&
           git pull origin main &&
           docker-compose down &&
-          docker-compose up -d
+          docker-compose up -d --build
         '
