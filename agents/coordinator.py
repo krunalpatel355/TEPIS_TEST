@@ -41,7 +41,6 @@ def get_secret():
             SecretId=secret_name
         )
         secret = get_secret_value_response['SecretString']
-        print(secret)
         return secret
     except ClientError as e:
         # For a list of exceptions thrown, see

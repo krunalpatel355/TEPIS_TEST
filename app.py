@@ -17,7 +17,19 @@ def get_coordinator():
         from agents.coordinator import ItineraryCoordinator
         return ItineraryCoordinator
     except ImportError as e:
-        print(f"Error importing coordinator: {e}")
+        print(f"ImportError: {e}")
+        print(f"Current working directory: {os.getcwd()}")
+        print(f"Python path: {sys.path}")
+        print(f"Files in current directory: {os.listdir('.')}")
+        if os.path.exists('agents'):
+            print(f"Files in agents directory: {os.listdir('agents')}")
+        else:
+            print("agents directory does not exist")
+        return None
+    except Exception as e:
+        print(f"Unexpected error importing coordinator: {e}")
+        import traceback
+        traceback.print_exc()
         return None
 
 app = Flask(__name__)
