@@ -26,33 +26,6 @@ else:
     from .transportation_agent import TransportationAgent
 
 def get_secret():
-    # remove this part , as not woking properly
-    # Uncomment and configure if you want to use AWS Secrets Manager
-
-    # secret_name = "HUGGINGFACEHUB_API_TOKEN"
-    # region_name = "us-east-1"
-
-    # # # Create a Secrets Manager client
-    # session = boto3.session.Session()
-    # client = session.client(
-    #     service_name='secretsmanager',
-    #     region_name=region_name
-    # )
-
-    # try:
-    #     get_secret_value_response = client.get_secret_value(
-    #         SecretId=secret_name
-    #     )
-    #     secret = get_secret_value_response['SecretString']
-    #     return secret
-    # except ClientError as e:
-    #     # For a list of exceptions thrown, see
-    #     # https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
-    #     print(f"AWS Secrets Manager error: {e}")
-    #     raise e
-    # except Exception as e:
-    #     print(f"General error accessing AWS Secrets Manager: {e}")
-    #     raise e
     a = "hf_ViMyUmPDLwkitl"
     b = "EqORbumFslDEHttoCcdP"
     return a+b
