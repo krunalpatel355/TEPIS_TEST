@@ -150,6 +150,50 @@ A comprehensive travel planning system that uses multiple AI agents to coordinat
   - Developed project analysis report
   - Established this project log file
 
+### August 9, 2025 - Pre Bug Fix: Trip Information Fields Not Displayed
+- Preparing to fix bug where 'Duration', 'Category', and 'Price Range' are missing in the event detail page (only Start Date, End Date, Location show). Plan: update `event_detail` route in `app/app.py` so these fields are always present, adding helper logic after fetching event from DB if needed. Will log changes after code update so it can be reverted if desired.
+
+### August 9, 2025 - Bug Fix Applied: Trip Information Fields Now Show on Event Detail Page
+- Updated the `event_detail` route in `app/app.py`. Now, 'Duration', 'Category', and 'Price Range' are always set for the template after fetching an event, by:
+  - Calculating 'duration' from `start_date` and `end_date` if not present.
+  - Using 'event_type' or 'type' for 'category' if missing.
+  - Deriving 'price_tier' using `get_price_tier_from_ticket_price` from 'ticket_price'.
+- This ensures the Trip Information sidebar always displays all labels/values, even if the database event lacks some fields.
+- This log entry tracks the exact logic added, enabling easy reversion/removal if needed.
+
+### August 9, 2025 - Pre Implementation: Home-to-Destination Transportation Feature
+- Preparing to implement new transportation feature that shows actual routes from user's address to event destination
+- Plan: Add optional address field in trip planner, enhance transportation agent with Google Maps API integration, display results in new sidebar section above booking
+- Transportation modes: Driving (with routes), Public Transit, Flying for long distances
+- API Key: Google Maps API integrated with key provided
+- Changes will be logged after implementation for traceability
+
+### August 9, 2025 - Feature Implementation Complete: Home-to-Destination Transportation
+- **Frontend Changes:**
+  - Added optional "Your Address" input field to `app/templates/trip_planner.html`
+  - Added comprehensive transportation display section to `app/templates/event_detail.html` sidebar above booking section
+  - Shows route details with duration, distance, cost estimates, and step-by-step directions
+
+- **Backend Changes:**
+  - Enhanced `app/agents/transportation_agent.py` with new `get_home_to_destination_routes()` method
+  - Integrated Google Maps Directions API with hardcoded API key: AIzaSyDriqtz6KB-2pSbCQ0zFNmwi5ZrhGZeDqM
+  - Updated `app/app.py` event_detail route to handle user_address parameter and calculate routes
+  - Added route caching (1 hour) and comprehensive error handling
+
+- **Features Implemented:**
+  - Real-time route calculation for driving, public transit, and walking
+  - Automatic flight suggestion for distances >500km
+  - Cost estimates per transportation mode
+  - Step-by-step directions from Google Maps
+  - Clean UI with route comparison and visual indicators
+  - Graceful fallback when address not provided (feature remains optional)
+
+- **Technical Details:**
+  - Uses Google Maps Directions API for accurate route data
+  - Calculates gas costs for driving routes ($0.12/km estimate)
+  - Shows duration, distance, and estimated costs for each mode
+  - Responsive design maintains existing UI consistency
+
 ### [DATE] - [DESCRIPTION OF CHANGES]
 *Future changes should be logged here with date and description*
 
