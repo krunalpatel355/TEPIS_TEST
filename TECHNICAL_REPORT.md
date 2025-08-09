@@ -8,19 +8,9 @@ The platform addresses the fragmented nature of event-based travel planning by p
 
 ## Team Members and Setup
 
-**Team Size:** 1 Developer (Full-Stack)
+**Team Size:** 8 
 **Development Duration:** 3+ months (ongoing)
-**Project Owner:** Krunal Patel (krunalpatel355)
-**Repository:** TEPIS_TEST (GitHub)
-
-**Team Roles:**
-- **Full-Stack Developer:** System architecture, backend development, AI integration, frontend design, deployment
-
-**Development Environment:**
-- **OS:** Windows 11
-- **IDE:** VS Code
-- **Version Control:** Git/GitHub
-- **Package Management:** pip (Python), npm (Node.js auxiliary tools)
+**Repository:** TEPIS (GitHub)
 
 ## Industry
 
@@ -45,7 +35,6 @@ Current event booking platforms provide isolated experiences - users can discove
 5. **Budget Uncertainty:** Difficulty estimating total trip costs beyond event tickets
 
 **Pain Points Identified:**
-- 73% of event attendees spend 4+ hours planning ancillary travel components
 - Lack of destination expertise for event locations
 - Poor integration between event timing and local activity scheduling
 - Limited budget-aware recommendations
@@ -97,168 +86,282 @@ Current event booking platforms provide isolated experiences - users can discove
 
 ## Research
 
-**Technology Research Conducted:**
+**Technology Research and Experimentation:**
 
-1. **AI/ML Frameworks:**
-   - LangChain vs. LlamaIndex vs. Custom Agents
-   - Hugging Face vs. OpenAI vs. Google AI
-   - Model comparison: GPT-4, Mistral 7B, Llama 2
+The development process involved extensive experimentation with various tools and frameworks across multiple domains:
 
-2. **Database Solutions:**
-   - MongoDB vs. PostgreSQL vs. Elasticsearch
-   - Atlas vs. Self-hosted MongoDB
-   - Schema design for event data
+### **Frontend Development Research:**
+- **Flask vs. React vs. Streamlit:** Server-side rendering vs. SPA vs. rapid prototyping
+- **Template Engines:** Jinja2 vs. React Components vs. Streamlit widgets
+- **CSS Frameworks:** Custom CSS vs. Bootstrap vs. Tailwind CSS
 
-3. **Frontend Frameworks:**
-   - React vs. Vue vs. Server-side rendering
-   - CSS frameworks: Tailwind vs. Bootstrap vs. Custom
+### **Database Technology Research:**
+- **MongoDB Solutions:** Local setup vs. MongoDB Atlas cloud
+- **SQL Databases:** PostgreSQL, MySQL for structured event data
+- **NoSQL Alternatives:** Elasticsearch for search capabilities
 
-4. **Deployment Strategies:**
-   - Docker containerization approaches
-   - AWS vs. GCP vs. Azure
-   - CI/CD pipeline options
+### **AI/ML Framework Research:**
+- **Agent Frameworks:** LangChain vs. AutoGen vs. Custom implementations
+- **API Services:** Direct OpenAI API vs. Hugging Face vs. Ollama local models
+- **Model Options:** GPT-4, Llama models, Mistral 7B comparison
+- **Web Scraping:** Crawl4AI vs. Beautiful Soup vs. Scrapy
+
+### **Deployment and Infrastructure Research:**
+- **Cloud Providers:** AWS EC2 vs. alternatives
+- **CI/CD Solutions:** GitHub Actions vs. manual deployment
+- **Containerization:** Docker vs. native deployment
 
 ## Approaches/Tools/Techniques Tried
 
-### Successfully Implemented:
+### **Successfully Implemented Technologies:**
 
-1. **AI Agent Architecture**
-   - LangChain framework for agent coordination
-   - Mistral 7B model for content generation
-   - Hugging Face API for model inference
-   - Custom caching system (24-hour for AI, 1-hour for weather)
+#### **1. Frontend Stack - Flask + Jinja2**
+- **Flask Web Framework:** Lightweight Python web framework
+- **Jinja2 Templates:** Server-side rendering with dynamic content
+- **Custom CSS/JavaScript:** Responsive design without framework overhead
+- **Progressive Enhancement:** Core functionality works without JavaScript
 
-2. **Backend Framework**
-   - Flask web framework
-   - PyMongo for database operations
-   - Jinja2 templating engine
-   - RESTful API design patterns
+#### **2. AI/ML Framework - LangChain + Custom Agents**
+- **LangChain Orchestration:** Agent coordination and prompt management
+- **Custom Agent Implementation:** Specialized agents for different domains
+- **Mistral 7B Model:** Efficient language model via Hugging Face API
+- **Caching System:** 24-hour AI response cache, 1-hour weather cache
 
-3. **Database Design**
-   - MongoDB Atlas cloud deployment
-   - Document-based event schema
-   - Aggregation pipelines for filtering
-   - Smart indexing strategy
+#### **3. Database Solution - MongoDB Atlas**
+- **Cloud-hosted MongoDB:** Managed database service
+- **Document-based Schema:** Flexible event data structure
+- **Aggregation Pipelines:** Advanced filtering and querying
+- **Geographic Indexing:** Location-based search optimization
 
-4. **Frontend Implementation**
-   - Responsive HTML5/CSS3
-   - JavaScript ES6+ for interactivity
-   - Progressive enhancement approach
-   - Mobile-first design principles
-
-5. **Infrastructure**
-   - Docker containerization
-   - AWS EC2 deployment
-   - Environment-based configuration
-   - Git-based version control
+#### **4. Deployment Infrastructure - AWS + Docker**
+- **AWS EC2:** Cloud hosting with manual PEM file access
+- **Docker Containerization:** Consistent deployment environments
+- **Manual Deployment:** Direct server management for development speed
+- **Environment Configuration:** Secure environment variable handling
 
 ## Approaches/Tools/Techniques Rejected
 
-### 1. **React Frontend Framework**
-**Attempted:** Single Page Application with React
-**Timeline:** Week 1-2 of development
+### **1. Frontend Frameworks**
 
-### 2. **OpenAI GPT Models**
-**Attempted:** GPT-3.5/GPT-4 integration
-**Timeline:** Initial AI implementation phase
+#### **React Frontend**
+- **Attempted:** Single Page Application development
+- **Timeline:** Initial 2-3 weeks of development
+- **Issues Encountered:**
+  - Over-complicated for project requirements
+  - Slower development iteration cycles
+  - Complex state management for AI integration
+  - Bundle size concerns for performance
 
-### 3. **PostgreSQL Database**
-**Attempted:** Relational database for event storage
-**Timeline:** Database design phase
+#### **Streamlit**
+- **Attempted:** Rapid prototyping interface
+- **Timeline:** 1 week evaluation period
+- **Issues Encountered:**
+  - Too simplistic for complex UI requirements
+  - Limited customization options
+  - Poor integration with custom AI agents
+  - Not suitable for production deployment
 
-### 4. **Microservices Architecture**
-**Attempted:** Separate services for each AI agent
-**Timeline:** Architecture planning phase
+### **2. Database Solutions**
 
-### 5. **Real-time WebSocket Communication**
-**Attempted:** Live itinerary updates
-**Timeline:** Frontend enhancement phase
+#### **Local MongoDB Setup**
+- **Attempted:** Self-hosted MongoDB on EC2
+- **Timeline:** Database architecture phase
+- **Issues Encountered:**
+  - Complex setup and configuration on EC2
+  - Manual backup and maintenance overhead
+  - Security configuration challenges
+  - Performance tuning complexity
+
+#### **SQL Databases (PostgreSQL/MySQL)**
+- **Attempted:** Relational database for event storage
+- **Timeline:** Initial database design phase
+- **Issues Encountered:**
+  - Rigid schema not suitable for evolving event data
+  - Poor JSON handling for nested attributes
+  - Complex joins for filtering operations
+  - Vertical scaling limitations
+
+### **3. AI/ML Frameworks**
+
+#### **Direct OpenAI API**
+- **Attempted:** GPT-3.5/GPT-4 direct integration
+- **Timeline:** Initial AI implementation phase
+- **Issues Encountered:**
+  - High API costs for multiple agents
+  - Rate limiting for concurrent requests
+  - Service reliability dependencies
+  - Limited customization options
+
+#### **Ollama Local Models**
+- **Attempted:** Local model deployment
+- **Timeline:** AI architecture research phase
+- **Issues Encountered:**
+  - High computational requirements
+  - Complex model management
+  - Inconsistent performance on EC2
+  - Resource intensive for multiple agents
+
+#### **AutoGen Framework**
+- **Attempted:** Multi-agent conversation framework
+- **Timeline:** Agent architecture exploration
+- **Issues Encountered:**
+  - Over-complex for single-user scenarios
+  - Limited control over agent responses
+  - Poor integration with web frameworks
+  - Unnecessary conversation overhead
+
+#### **Crawl4AI Web Scraping**
+- **Attempted:** AI-powered web scraping
+- **Timeline:** Data collection research phase
+- **Issues Encountered:**
+  - Inconsistent extraction quality
+  - Complex setup and configuration
+  - Rate limiting issues
+  - Not suitable for static event data
+
+#### **Llama Models**
+- **Attempted:** Large language model alternatives
+- **Timeline:** Model comparison phase
+- **Issues Encountered:**
+  - Too large for efficient API calls
+  - Higher computational costs
+  - Slower inference times
+  - Memory requirements exceeded budget
+
+### **4. Deployment and Infrastructure**
+
+#### **GitHub Actions CI/CD**
+- **Attempted:** Automated deployment pipeline
+- **Timeline:** Infrastructure setup phase
+- **Issues Encountered:**
+  - Over-complex for single developer workflow
+  - Debugging difficulties in pipeline
+  - Slower iteration for quick fixes
+  - Setup time vs. development time trade-off
+
+#### **Test Case Implementation**
+- **Attempted:** Comprehensive testing framework
+- **Timeline:** Quality assurance phase
+- **Issues Encountered:**
+  - Time-intensive setup for AI agent testing
+  - Complex mocking for external APIs
+  - Maintenance overhead for changing requirements
+  - Slowed development velocity
 
 ## Reasons for Rejection
 
-### 1. **React Frontend Framework**
-- **Complexity:** Over-engineering for current requirements
-- **Development Speed:** Slower iteration vs. server-side rendering
-- **SEO Concerns:** Search engine optimization challenges
-- **Bundle Size:** Unnecessary client-side overhead
+### **Frontend Technology Rejections:**
 
-### 2. **OpenAI GPT Models**
-- **Cost:** Expensive API calls for high-volume usage
-- **Rate Limits:** Restrictive for concurrent user requests
-- **Dependency:** External service reliability concerns
-- **Customization:** Limited model fine-tuning options
+#### **React Framework:**
+- **Complexity vs. Value:** Over-engineering for current feature set
+- **AI Integration Challenges:** Required complete rework for agent integration
+- **Development Speed:** Slower iteration compared to server-side rendering
+- **Learning Curve:** Additional complexity for single developer
 
-### 3. **PostgreSQL Database**
-- **Schema Rigidity:** Inflexible for evolving event data structures
-- **JSON Handling:** Poor support for nested event attributes
-- **Scaling:** Vertical scaling limitations
-- **Complexity:** Unnecessary relational complexity
+#### **Streamlit:**
+- **Limited Customization:** Insufficient control over UI/UX design
+- **Production Readiness:** Not suitable for customer-facing applications
+- **Integration Limitations:** Poor support for complex backend logic
 
-### 4. **Microservices Architecture**
-- **Overhead:** Excessive infrastructure complexity
-- **Development Speed:** Slower development and debugging
-- **Network Latency:** Inter-service communication delays
-- **Resource Usage:** Higher memory and CPU requirements
+### **Database Technology Rejections:**
 
-### 5. **Real-time WebSocket Communication**
-- **Complexity:** Implementation complexity vs. value
-- **Resource Usage:** Server resource intensive
-- **User Need:** Limited user demand for real-time updates
-- **Fallback Handling:** Complex error scenarios
+#### **Local MongoDB:**
+- **Operational Overhead:** Manual management complexity on EC2
+- **Setup Issues:** Configuration difficulties in cloud environment
+- **Maintenance Burden:** Backup, security, and performance tuning
+
+#### **SQL Databases:**
+- **Schema Inflexibility:** Poor fit for evolving event data structures
+- **JSON Support:** Limited native support for nested attributes
+- **Query Complexity:** Complex joins for filtering operations
+
+### **AI/ML Framework Rejections:**
+
+#### **Direct OpenAI API:**
+- **Cost Concerns:** Expensive for high-volume multi-agent usage
+- **Rate Limitations:** Restrictive for concurrent agent operations
+- **Service Dependency:** External reliability concerns
+
+#### **Local Model Solutions (Ollama, Llama):**
+- **Resource Requirements:** Exceeded available computational budget
+- **Complexity:** Setup and maintenance overhead
+- **Performance:** Inconsistent results on cloud infrastructure
+
+#### **Complex Agent Frameworks (AutoGen):**
+- **Over-Engineering:** Unnecessary complexity for single-user scenarios
+- **Integration Issues:** Poor compatibility with web frameworks
+- **Control Limitations:** Reduced control over agent behavior
+
+### **Infrastructure Rejections:**
+
+#### **Automated CI/CD:**
+- **Setup Complexity:** Time-intensive configuration
+- **Development Velocity:** Slowed rapid iteration cycles
+- **Debugging Difficulty:** Complex troubleshooting in pipeline
 
 ## Approaches/Tools/Techniques Approved
 
-### 1. **LangChain + Mistral 7B**
-**Implementation:** AI agent coordination framework
-**Integration:** Hugging Face API endpoints
+### **1. Flask Web Framework + Jinja2 Templates**
+- **Implementation:** Server-side web application
+- **Integration:** Template-based dynamic content rendering
+- **Benefits:** Rapid development, SEO-friendly, simple maintenance
 
-### 2. **Flask + Jinja2**
-**Implementation:** Server-side web framework
-**Integration:** Template-based rendering
+### **2. LangChain + Custom AI Agents**
+- **Implementation:** Multi-agent coordination framework
+- **Integration:** Specialized agents with Hugging Face API
+- **Benefits:** Modular design, easy customization, reliable orchestration
 
-### 3. **MongoDB Atlas**
-**Implementation:** Cloud-hosted NoSQL database
-**Integration:** PyMongo driver
+### **3. Mistral 7B via Hugging Face API**
+- **Implementation:** Language model for content generation
+- **Integration:** API-based inference with caching
+- **Benefits:** Cost-effective, good performance, manageable size
 
-### 4. **Docker Containerization**
-**Implementation:** Application packaging and deployment
-**Integration:** Docker Compose orchestration
+### **4. MongoDB Atlas**
+- **Implementation:** Cloud-hosted NoSQL database
+- **Integration:** PyMongo driver with aggregation pipelines
+- **Benefits:** Managed service, flexible schema, excellent scaling
 
-### 5. **Multi-Agent AI System**
-**Implementation:** Specialized agents for different domains
-**Integration:** Coordinator pattern for orchestration
+### **5. Docker + Manual AWS EC2 Deployment**
+- **Implementation:** Containerized application deployment
+- **Integration:** Simple Docker Compose orchestration
+- **Benefits:** Consistent environments, easy deployment, development flexibility
 
 ## Reasons for Approval
 
-### 1. **LangChain + Mistral 7B**
-- **Performance:** Fast inference times (2-5 seconds)
-- **Cost-Effective:** Free tier availability on Hugging Face
-- **Flexibility:** Easy model swapping and customization
-- **Community:** Strong open-source ecosystem
+### **Flask + Jinja2 Selection:**
+- **Simplicity:** Minimal learning curve and configuration
+- **Performance:** Fast server-side rendering and response times
+- **Flexibility:** Easy customization and feature addition
+- **AI Integration:** Seamless integration with Python AI libraries
+- **Development Speed:** Rapid prototyping and iteration
 
-### 2. **Flask + Jinja2**
-- **Simplicity:** Minimal learning curve and boilerplate
-- **Flexibility:** Easy customization and extension
-- **Performance:** Fast server-side rendering
-- **SEO-Friendly:** Better search engine indexing
+### **LangChain + Custom Agents Selection:**
+- **Modularity:** Each agent handles specific domain expertise
+- **Control:** Full control over agent behavior and responses
+- **Reliability:** Built-in error handling and fallback mechanisms
+- **Scalability:** Easy to add new agents or modify existing ones
+- **Community:** Strong open-source ecosystem and documentation
 
-### 3. **MongoDB Atlas**
-- **Schema Flexibility:** Easy adaptation to changing data structures
-- **JSON Native:** Natural fit for event data formats
-- **Scaling:** Built-in horizontal scaling capabilities
-- **Management:** Reduced operational overhead
+### **Mistral 7B Model Selection:**
+- **Performance:** 2-5 second response times for quality content
+- **Cost-Effectiveness:** Free tier availability on Hugging Face
+- **Size Efficiency:** Smaller model with good performance balance
+- **Quality:** High-quality outputs for travel recommendations
+- **Reliability:** Stable API service with good uptime
 
-### 4. **Docker Containerization**
-- **Consistency:** Identical environments across development/production
-- **Portability:** Easy deployment across cloud providers
-- **Isolation:** Clean dependency management
-- **Scalability:** Container orchestration support
+### **MongoDB Atlas Selection:**
+- **Managed Service:** Reduced operational overhead
+- **Schema Flexibility:** Easy adaptation to changing data requirements
+- **JSON Native:** Perfect fit for event and itinerary data structures
+- **Performance:** Built-in indexing and aggregation capabilities
+- **Scaling:** Horizontal scaling capabilities for growth
 
-### 5. **Multi-Agent AI System**
-- **Specialization:** Each agent optimized for specific domain
-- **Modularity:** Easy to update individual components
-- **Reliability:** Fallback systems for agent failures
-- **Performance:** Parallel processing capabilities
+### **Docker + AWS EC2 Selection:**
+- **Consistency:** Identical environments across development and production
+- **Simplicity:** Manual deployment for quick iterations and debugging
+- **Control:** Full control over server configuration and resources
+- **Cost-Effective:** Simple EC2 instance with predictable costs
+- **Reliability:** Proven infrastructure with good uptime
 
 ## System Architecture
 
