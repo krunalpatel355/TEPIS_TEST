@@ -210,14 +210,12 @@ The development process involved extensive experimentation with various tools an
   - Poor integration with web frameworks
   - Unnecessary conversation overhead
 
-#### **Crawl4AI Web Scraping**
-- **Attempted:** AI-powered web scraping
-- **Timeline:** Data collection research phase
+#### **Crew AI**
+- **Attempted:** Crew AI agentic framework
+- **Timeline:** Agent architecture exploration
 - **Issues Encountered:**
-  - Inconsistent extraction quality
-  - Complex setup and configuration
-  - Rate limiting issues
-  - Not suitable for static event data
+  - overcolplicated
+  - unable to integrate with local code
 
 #### **Llama Models**
 - **Attempted:** Large language model alternatives
@@ -295,9 +293,7 @@ The development process involved extensive experimentation with various tools an
 ### **Infrastructure Rejections:**
 
 #### **Automated CI/CD:**
-- **Setup Complexity:** Time-intensive configuration
-- **Development Velocity:** Slowed rapid iteration cycles
-- **Debugging Difficulty:** Complex troubleshooting in pipeline
+- **Setup Complexity:** Hard code the pem file into cicd pipeline       
 
 ## Approaches/Tools/Techniques Approved
 
@@ -526,7 +522,7 @@ cache_structure = {
 
 #### **Event Data Sources:**
 - **Primary:** MongoDB Atlas (ticketmaster collection)
-- **Volume:** 1000+ events across 50+ countries
+- **Volume:** 10000+ events across 2 countries
 - **Update Frequency:** Batch updates (weekly/monthly)
 - **Data Quality:** Manual curation and validation
 
@@ -580,12 +576,12 @@ GET  /event/<event_id>          # Event details
 GET  /trip-planner/<event_id>   # Trip planning interface
 
 # API Parameters
-?category=<category>            # Filter by event type
-?price_range=<tier>            # Filter by price tier
-?location=<location>           # Filter by state/city
-?search=<query>                # Search events
-?page=<number>                 # Pagination
-?duration=<days>&cost=<tier>   # Trip planning parameters
+category=<category>            # Filter by event type
+price_range=<tier>            # Filter by price tier
+location=<location>           # Filter by state/city
+search=<query>                # Search events
+page=<number>                 # Pagination
+duration=<days>&cost=<tier>   # Trip planning parameters
 ```
 
 #### **Service Layer Architecture:**
@@ -742,10 +738,9 @@ GET  /trip-planner/<event_id>   # Trip planning interface
 ### Repository Management:
 
 #### **GitHub Repository Structure:**
-- **Repository Name:** TEPIS_TEST
-- **Owner:** krunalpatel355
+- **Repository Name:** TEPIS
 - **Visibility:** Public
-- **Branch Strategy:** Single main branch (current phase)
+- **Branch Strategy:** main - dev - test - reaserch branches
 
 #### **Project Organization:**
 - **Issue Tracking:** GitHub Issues for bug reports and feature requests
@@ -755,11 +750,11 @@ GET  /trip-planner/<event_id>   # Trip planning interface
 
 ### Development Workflow:
 
-#### **Current Workflow (Single Developer):**
-1. **Feature Development:** Direct commits to main branch
+#### **Current Workflow:**
+1. **Feature Development:** Direct commits to dev branch
 2. **Testing:** Local testing before commits
 3. **Documentation:** Inline code documentation
-4. **Deployment:** Manual deployment to AWS EC2
+4. **Deployment:** deployment to AWS EC2
 
 #### **Recommended Future Workflow:**
 1. **Branch Strategy:** GitFlow (develop/feature/release branches)
@@ -771,6 +766,12 @@ GET  /trip-planner/<event_id>   # Trip planning interface
 
 ### Current Repository Structure:
 
+#### **Branch:**
+1. **Main Branch:** final deployment branch
+2. **Dev Branch:** dev env branch
+3. **Test branch:** CI/CD pipeline tests branch
+4. **Reaserch branch:** 
+-  Staging → Testing → Development  → Production
 ```
 TEPIS_TEST/
 ├── 📄 README.md                   # Project overview and setup
@@ -816,36 +817,6 @@ TEPIS_TEST/
 **Configuration Files (Future):**
 - `config.py` - Application configuration
 - `nginx.conf` - Web server configuration
-- `supervisord.conf` - Process management
-
-## Branches and their function
-
-### Current Branch Strategy:
-
-#### **Main Branch:**
-- **Branch Name:** `main`
-- **Function:** Production-ready code
-- **Stability:** Stable, deployable code only
-- **Deployment:** Direct deployment to AWS EC2
-
-### Recommended Future Branch Strategy:
-
-#### **Development Branches:**
-- **`develop`:** Integration branch for features
-- **`feature/*`:** Individual feature development
-- **`hotfix/*`:** Critical production fixes
-- **`release/*`:** Release preparation branches
-
-#### **Branch Functions:**
-```
-main (Production)
-├── hotfix/critical-bug-fix
-├── release/v2.0.0
-└── develop (Integration)
-    ├── feature/user-accounts
-    ├── feature/payment-integration
-    └── feature/mobile-app
-```
 
 ## Files/folders have what code
 
@@ -1481,14 +1452,6 @@ def validate_event_data(event):
 - **Fallback Usage Rate:** 6%
 - **User Satisfaction Score:** 4.2/5.0
 
-### Testing Metrics:
-
-| Folder/Component | Coverage % | Failure Rate % | % of bugs detected in test |
-|------------------|------------|----------------|---------------------------|
-| app/ | 0% | N/A | N/A |
-| agents/ | 0% | N/A | N/A |
-| templates/ | 0% | N/A | N/A |
-| static/ | 0% | N/A | N/A |
 
 **Note:** Testing implementation is planned for Phase 2 development.
 
@@ -1498,7 +1461,7 @@ def validate_event_data(event):
 
 | Metric | Value |
 |--------|-------|
-| **Instance Type** | t3.medium |
+| **Instance Type** | t3.micro |
 | **CPU Utilization** | 25% (avg), 70% (peak) |
 | **Memory Usage** | 60% (avg), 85% (peak) |
 | **Network I/O** | 15 Mbps (avg), 45 Mbps (peak) |
@@ -1536,8 +1499,8 @@ def validate_event_data(event):
 
 #### **1. Clone Repository**
 ```bash
-git clone https://github.com/krunalpatel355/TEPIS_TEST.git
-cd TEPIS_TEST
+git https://github.com/LCM-S25-3035/TEPIS.git
+cd TEPIS
 ```
 
 #### **2. Environment Configuration**
